@@ -1,24 +1,33 @@
 
 width = 150;
-altquad = true;
 
 main();
 
 module main() {
     nrings = 10;
     nringpts = 360;
-    tip_pts = [[0, 0, 0], [0, 0, 20]];
-    nt = len(tip_pts);
     
+    faceted_vase(
+        nrings=nrings,
+        nringpts=nringpts,
+        height=10,
+        points = [
+            for (ring = [0:nrings - 1])
+            for (ringpt = [0:nringpts - 1])
+            [sin(ringpt), cos(ringpt), ring]
+        ]
+    );
+}
+
+
+module faceted_vase(nrings, nringpts, height, points) {
+    tip_pts = [[0, 0, 0], [0, 0, height]];
+    nt = len(tip_pts);
     polyhedron(
         convexity = 2,
         points = concat(
             tip_pts,
-            [
-                for (ring = [0:nrings - 1])
-                for (ringpt = [0:nringpts - 1])
-                [sin(ringpt), cos(ringpt), ring]
-            ]
+            points
         ),
         faces = flatten([
             for (ring0 = [-1:nrings - 1])
