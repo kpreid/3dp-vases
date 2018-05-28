@@ -6,8 +6,8 @@ translate([width / 2, width / 2, 0])
 main();
 
 module main() {
-    nrings = 10;
-    nringpts = 20;
+    nrings = 6;
+    nringpts = nrings * 2;
     
     faceted_vase(
         nrings=nrings,
@@ -27,7 +27,7 @@ module main() {
     function radiusfn(angle, z) = 
         width / 2
         * 1.2 * (0.9 + 0.1 * cos((angle + 45) * 4))
-        * (1);
+        * 0.9 * (1 + 0.2 * cos(z / height * 300 - 60));
 }
 
 
