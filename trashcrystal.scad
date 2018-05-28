@@ -1,20 +1,24 @@
 
 width = 150;
+height = 150;
 
 main();
 
 module main() {
     nrings = 10;
-    nringpts = 360;
+    nringpts = 10;
     
     faceted_vase(
         nrings=nrings,
         nringpts=nringpts,
-        height=10,
+        height=height,
         points = [
             for (ring = [0:nrings - 1])
+            let (advance = -ring * (360 / nrings) / 2)
             for (ringpt = [0:nringpts - 1])
-            [sin(ringpt), cos(ringpt), ring]
+            let (angle = advance + ringpt * 360 / nrings,
+                 r = width / 2)
+            [r * sin(angle), r * cos(angle), height / (nrings - 1) * ring]
         ]
     );
 }
